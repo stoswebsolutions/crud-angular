@@ -1,0 +1,145 @@
+<div class="row">
+    <div class="col">
+        <div class="container-sm p-1">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    Form Data
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Enter the Form Details</h5>
+                    <form [formGroup]="formdata" (ngSubmit)="onSubmit()" >
+                        <div class="row">
+                            <div class="col">
+                                <label>First Name</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="firstname"
+                                    placeholder="First name"
+                                    aria-label="First name"
+                                >
+                            </div>
+                            <div class="col">
+                                <label>Last Name</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="lastname"
+                                    placeholder="Last name"
+                                    aria-label="Last name"
+                                >
+                            </div>
+                            <div class="col">
+                                <label>Email</label>
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    formControlName="email"
+                                    placeholder="Email"
+                                    aria-label="Email"
+                                >
+                            </div>
+                        </div>
+                        <div class="row p-1">
+                            <div class="col">
+                                <label>Age</label>
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    formControlName="age"
+                                    placeholder="Age"
+                                    aria-label="Age"
+                                >
+                            </div>
+                            <div class="col">
+                                <label>Mobile Number</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="mobile"
+                                    placeholder="Mobile Number"
+                                    aria-label="Mobile Number"
+                                >
+                            </div>
+                            <div class="col">
+                                <label>DOB</label>
+                                <input
+                                    type="date"
+                                    class="form-control"
+                                    formControlName="dob"
+                                    placeholder="DOB"
+                                    aria-label="DOB"
+                                >
+                            </div>
+                        </div>
+                        <div class="row p-1">
+                            <div class="col">
+                                <label>Native Place</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="place"
+                                    placeholder="Native Place"
+                                    aria-label="Native Place"
+                                >
+                            </div>
+                            <div class="col">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Select Gender</mat-label>
+                                    <mat-select formControlName="gender">
+                                      <mat-option *ngFor="let gender of genders" [value]="gender">
+                                        {{gender}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row p-1">
+                            <div class="col" *ngIf="!isedit"><button class="btn btn-primary" type="submit">Submit</button></div>
+                            <div class="col" *ngIf="isedit"><button class="btn btn-secondary" type="button" (click)="onSave()">Save</button></div>
+                            <div class="col"><button class="btn btn-danger" type="button" (click)="onCancel()">Cancel</button></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <table class="table table-bordered mt-1">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">FirstName</th>
+                <th scope="col">LastName</th>
+                <th scope="col">Age</th>
+                <th scope="col">place</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+                <th scope="col">View</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let userData of listOfData; let i=index">
+                <th scope="row">{{i+1}}</th>
+                <td>{{userData?.firstname}}</td>
+                <td>{{userData?.lastname}}</td>
+                <td>{{userData?.age}}</td>
+                <td>{{userData?.place}}</td>
+                <td (click)="onEdit(i)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                  </svg></td>
+                <td (click)="onDelete(userData,i)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash2-fill" viewBox="0 0 16 16">
+                    <path d="M2.037 3.225A.703.703 0 0 1 2 3c0-1.105 2.686-2 6-2s6 .895 6 2a.702.702 0 0 1-.037.225l-1.684 10.104A2 2 0 0 1 10.305 15H5.694a2 2 0 0 1-1.973-1.671L2.037 3.225zm9.89-.69C10.966 2.214 9.578 2 8 2c-1.58 0-2.968.215-3.926.534-.477.16-.795.327-.975.466.18.14.498.307.975.466C5.032 3.786 6.42 4 8 4s2.967-.215 3.926-.534c.477-.16.795-.327.975-.466-.18-.14-.498-.307-.975-.466z"/>
+                  </svg></td>
+                  <td (click)="onView(userData)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                  </svg></td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>
+<div class="row">
+    {{selecteduserData | json}}
+</div>
